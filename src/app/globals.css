@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+body.lightbox-open {
+    overflow: hidden;
+}
+
+.button-element {
+    @apply
+        p-1
+        text-sm
+        border-1
+        rounded-md
+        cursor-pointer
+    ;
+}
+
+.char-limit-50 {
+    @apply
+        bg-yellow-300/60
+        focus:bg-yellow-300/60
+    ;
+}
+
+.char-limit-75 {
+    @apply
+        bg-yellow-600/60
+        focus:bg-yellow-600/60
+    ;
+}
+
+.char-limit-90 {
+    @apply
+        bg-red-500/60
+        focus:bg-red-500/60
+    ;
+}
+
+.char-limit-100 {
+    @apply
+        bg-red-600/60
+        focus:bg-red-600/60
+    ;
+}
+
+.error-text {
+    @apply text-red-500;
+}
+
+.warn-text {
+    @apply text-yellow-300;
+}
+
+.success-text {
+    @apply text-lime-600;
+}
+
+
+/* For user post card media */
+.pc-media-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-auto-rows: minmax(auto, max-content);
+    align-items: stretch;
+    cursor: pointer;
+    gap: 0;
+}
+
+.pc-media-item {
+    min-width: 5px;
+    min-height: 5px;
+    overflow: hidden;
+}
+
+.pc-media-item:hover {
+    opacity: 0.95;
+}
+
+.pc-media-item.large {
+    grid-row: span 2;
+}
+
+.pc-media-item.see-more-overlay {
+    position: relative;
+}
+
+.pc-media-item.see-more-overlay::before {
+    position: absolute;
+    content: attr(data-not-shown-count);
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+    @apply
+        p-1
+        text-2xl
+        bg-slate-950/50
+        rounded-2xl
+    ;
+}
+
+/* Create Post Container attachments dropdown */
+.attachments-dropdown {
+    @apply
+        hidden
+        flex-col
+        justify-center
+        items-start
+        bg-fuchsia-950/30
+        rounded-md
+        select-none
+    ;
+}
+
+.attachments-dropdown.show {
+    display: flex;
+}
+
+#profile-right-hand-cards::-webkit-scrollbar {
+    display: none;
+}
