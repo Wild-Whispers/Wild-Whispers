@@ -1,7 +1,7 @@
 "use client";
 
 import "./globals.css"; // Tailwind or global styles here
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { UserContextProvider } from "@/_Contexts/User.context";

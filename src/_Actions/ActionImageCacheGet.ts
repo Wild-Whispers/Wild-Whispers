@@ -4,7 +4,7 @@ import { UserImageTypes } from "@/_Enums/UserImageTypes";
 import isUserMedia, { UserMedia } from "@/_Interfaces/UserMedia";
 import { createClient } from "redis";
 
-let redis = createClient({url: process.env.NEXT_REDIS_URI});
+const redis = createClient({url: process.env.NEXT_REDIS_URI});
 await redis.connect();
 
 export default async function ActionImageCacheGet(uid: string, imageType: UserImageTypes): Promise<Array<UserMedia>> {
@@ -16,14 +16,14 @@ export default async function ActionImageCacheGet(uid: string, imageType: UserIm
     if (result.length > 0) {
         images = result.map(image => {
             try {
-                let img = JSON.parse(image);
+                const img = JSON.parse(image);
                 if (isUserMedia(img)) {
                     return img;
                 }
 
                 console.warn("Image cache item is not a valid UserMedia object:", image);
             } catch (error) {
-                console.warn("Image cache item is not a parsable JSON object:", image);
+                console.warn("Image cache item is not a parsable JSON object:", image, error);
             }
         });
     }

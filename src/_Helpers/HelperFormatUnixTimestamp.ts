@@ -9,7 +9,7 @@ export default function HelperFormatUnixTimestamp(timestamp: number) {
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const weeks = Math.floor(days / 7);
-    const months = Math.floor(days / 30);
+    const _months = Math.floor(days / 30);
 
     if (seconds < 60) return `${seconds}s ago`;
     if (minutes < 60) return `${minutes}m ago`;

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import NavbarAccountSection from "./NavbarAccountSection";
 import NavbarButton from "./NavbarButton";
 import NavbarSection from "./NavbarSection";
@@ -24,7 +25,7 @@ export default function Navbar() {
             
             <div className="flex flex-row justify-center items-center gap-2">
                 <NavbarTitleSection>
-                    <img className="w-9 h-9 rounded-md" src="/assets/icon_v1.png"/>
+                    <Image className="w-9 h-9 rounded-md" src="/assets/icon_v1.png" width={512} height={512} alt="Wild Whispers Network's official mascot icon"/>
                 </NavbarTitleSection>
 
                 {

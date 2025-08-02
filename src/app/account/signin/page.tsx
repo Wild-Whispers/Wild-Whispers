@@ -15,6 +15,7 @@ import { useUser } from "@/_Contexts/User.context";
 interface SigninResultPayload {
     user: string,
     password: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any // SHUT UP compiler
 }
 
@@ -34,10 +35,10 @@ export default function Signin() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        let formData = new FormData(e.currentTarget);
-        let payload = Object.fromEntries(formData.entries()) as SigninResultPayload;
+        const formData = new FormData(e.currentTarget);
+        const payload = Object.fromEntries(formData.entries()) as SigninResultPayload;
 
-        let { serverResponse, serverResponseClass } = await RequestSignin(router, payload.user, payload.password, setUser, setCurrentUser, setUidFromURL);
+        const { serverResponse, serverResponseClass } = await RequestSignin(router, payload.user, payload.password, setUser, setCurrentUser, setUidFromURL);
 
         setserverResponse(serverResponse);
         setserverResponseClass(serverResponseClass);
@@ -48,6 +49,7 @@ export default function Signin() {
 
             <FormSection optionalStyling={null}>
                 <h1 className="text-xl font-bold text-center">Sign in to your Wild Whispers account</h1>
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 <p className="text-xs font-bold text-center">This will sign you in to your linked account across all of Wild Whispers' services, ran by QuietWind01 (AKA QuietWindUponTheMoor).</p>
                 <p className={`text-xs font-bold text-center ${serverResponseClass}`}>{serverResponse}</p>
             </FormSection>

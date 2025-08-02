@@ -21,9 +21,9 @@ export default async function ActionCreatePost(user: User, paragraphsRaw: string
     console.info("[ActionCreatePost] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
-    let result = await mongo.insertOne("posts", {
+    const result = await mongo.insertOne("posts", {
         uid: user.uid,
         whisperID: whisperType === WhisperTypes.POST ? null : whisperID,
         whisperType: whisperType,

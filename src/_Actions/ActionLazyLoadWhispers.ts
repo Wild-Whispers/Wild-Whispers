@@ -2,11 +2,10 @@
 
 import { WhisperTypes } from "@/_Enums/WhisperTypes";
 import { Post } from "@/_Interfaces/Post";
-import isUser, { User } from "@/_Interfaces/User";
+import { User } from "@/_Interfaces/User";
 import { UserMedia } from "@/_Interfaces/UserMedia";
 import { ObjectId } from "bson";
 import { WildMongo } from "wildmongowhispers";
-import { ActionUserFetchByID } from "./ActionUserFetchByID";
 import { ActionUserBatchFetch, UserBatchInitializer } from "./ActionUserBatchFetch";
 
 export interface ActionLazyLoadPostsReturn {
@@ -19,7 +18,7 @@ export default async function ActionLazyLoadWhispers(whisperType: WhisperTypes, 
     console.info("[ActionLazyLoadWhispers] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
     let result: Array<Post> = [];
     if (!uid && !forWhisperID) {
@@ -50,7 +49,7 @@ export default async function ActionLazyLoadWhispers(whisperType: WhisperTypes, 
     }
 
     // Fetch all of the user objects relevant to the posts
-    let batchInitializer: Array<UserBatchInitializer> = result.map((whisper, i) => { // Will result in duplicates, but should overall complete faster
+    const batchInitializer: Array<UserBatchInitializer> = result.map(whisper => { // Will result in duplicates, but should overall complete faster
         return {
             whisperID: (whisper._id as ObjectId).toHexString(),
             uid: whisper.uid
@@ -58,9 +57,9 @@ export default async function ActionLazyLoadWhispers(whisperType: WhisperTypes, 
     });
 
 
-    let batchedUsers: Array<User> = await ActionUserBatchFetch(batchInitializer);
+    const batchedUsers: Array<User> = await ActionUserBatchFetch(batchInitializer);
 
-    let posts: Array<ActionLazyLoadPostsReturn> = await Promise.all(
+    const posts: Array<ActionLazyLoadPostsReturn> = await Promise.all(
         result.map(async item => {
             const creator: User = {
                 ...batchedUsers.find((user: User) => user._id.toHexString() === item.uid)!,

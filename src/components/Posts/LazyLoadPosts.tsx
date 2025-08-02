@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import PostCard from "../PostCard/PostCard";
 import { User } from "@/_Interfaces/User";
 import Card from "../Card";
@@ -13,6 +13,7 @@ export default function LazyLoadPosts({ user, appendedPostsCount }: { user: User
     const { currentUserOwnsProfile } = useUser();
     const [ready, setReady] = useState(false);
     const [posts, setPosts] = useState<Array<ActionLazyLoadPostsReturn>>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [postsSkip, setPostsSkip] = useState(0);
     const postsLimit = 20;
 
@@ -24,7 +25,7 @@ export default function LazyLoadPosts({ user, appendedPostsCount }: { user: User
         };
 
         if (!ready) fetchPosts();
-    }, [user.uid]);
+    }, [user.uid, postsSkip, ready]);
 
     if (!ready) return <SkeletonLineMultiple styling="" lineCount={5}/>
 

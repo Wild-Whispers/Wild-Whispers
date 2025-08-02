@@ -9,16 +9,15 @@ import ProfileName from "./ProfileName";
 import CardProfileSocial from "./Cards/CardProfileSocial";
 import { useUser } from "@/_Contexts/User.context";
 import isUser from "@/_Interfaces/User";
+import Image from "next/image";
 
 export default function ProfileCanvas() {
-    const { user, currentUserOwnsProfile, setUser } = useUser();
-    
-    // User-related hooks
+    const { user, currentUserOwnsProfile } = useUser();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [username, setUsername] = useState("");
     const [banner, setBanner] = useState("/assets/placeholders/profilebanner.png");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [profileImage, setProfileImage] = useState("/assets/placeholders/profileimage.png");
-
-    // Non-user-related hooks
     const [pageMessage, setPageMessage] = useState("");
     const [pageMessageClass, setPageMessageClass] = useState("success-text");
 
@@ -26,16 +25,16 @@ export default function ProfileCanvas() {
         if (isUser(user)) {
             document.title = currentUserOwnsProfile ? "Your Profile" : `${user.userName}'s Profile`;
             
-            let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+            const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
-            let image: UserMedia | undefined = user.image;
-            let banner: UserMedia | undefined = user.banner;
+            const image: UserMedia | undefined = user.image;
+            const banner: UserMedia | undefined = user.banner;
 
             if (isUserMedia(image) && image.path) setProfileImage(API_BASE_URL + image.path);
 
             if (isUserMedia(banner) && banner.path) setBanner(API_BASE_URL + banner.path);
         }
-    }, []);
+    }, [user, currentUserOwnsProfile]);
 
     return (
         <>
@@ -82,15 +81,15 @@ export default function ProfileCanvas() {
                     <div className="flex flex-col justify-center items-center">
                         <CardProfileSocial>
                             <span className="flex flex-row justify-between items-center gap-3">
-                                <img className="w-6 h-6" src="/assets/icons/discord.png"/>
+                                <Image className="w-6 h-6" width={512} height={512} src="/assets/icons/discord.png" alt="Discord icon"/>
                                 <p className="text-xs">@quietwinduponthemoor</p>
                             </span>
                             <span className="flex flex-row justify-between items-center gap-3">
-                                <img className="w-6 h-6" src="/assets/icons/github.png"/>
+                                <Image className="w-6 h-6" width={512} height={512} src="/assets/icons/github.png" alt="GitHub icon"/>
                                 <Link className="text-xs hover:underline cursor-pointer" href="https://github.com/QuietWindUponTheMoor/">QuietWindUponTheMoor</Link>
                             </span>
                             <span className="flex flex-row justify-between items-center gap-3">
-                                <img className="w-6 h-6" src="/assets/icons/steam.png"/>
+                                <Image className="w-6 h-6" width={512} height={512} src="/assets/icons/steam.png" alt="Steam icon"/>
                                 <Link className="text-xs hover:underline cursor-pointer" href="https://s.team/p/208154581">Quiet Wind</Link>
                             </span>
                         </CardProfileSocial>

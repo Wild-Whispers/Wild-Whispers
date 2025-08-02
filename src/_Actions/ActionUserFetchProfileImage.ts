@@ -19,9 +19,9 @@ export async function ActionUserFetchProfileImage(uid: string): Promise<UserMedi
     console.info("[ActionUserFetchProfileImage] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
-    let [image] = await mongo.find("media", { uid: uid, imageType: UserImageTypes.PROFILE_IMAGE });
+    const [image] = await mongo.find("media", { uid: uid, imageType: UserImageTypes.PROFILE_IMAGE });
 
     await mongo.ClosePoolConnection();
 

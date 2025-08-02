@@ -6,9 +6,9 @@ export default async function ActionFetchMediaByID(mediaID: string) {
     console.info("[ActionFetchMediaByID] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
-    let result = await mongo.findByID("media", mediaID);
+    const result = await mongo.findByID("media", mediaID);
 
     await mongo.ClosePoolConnection();
 

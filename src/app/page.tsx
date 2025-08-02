@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-    const { currentUser, user, currentUserOwnsProfile, setCurrentUser, setUser, uidFromURL } = useUser();
+    const { currentUser } = useUser();
     const [appendedPosts, updateAppendedPosts] = useState<Array<{ post: Post, mediaRaw: Array<UserMedia>}>>([]);
     const router = useRouter();
 
@@ -21,7 +21,7 @@ export default function Home() {
         if (!isUser(currentUser)) router.push("/account/signin");
 
         document.title = "Wild Whispers";
-    }, [router]);
+    }, [router, currentUser]);
 
     if (!isUser(currentUser)) return null;
 
@@ -33,7 +33,7 @@ export default function Home() {
                 <h3 className="text-lg font-bold">Recent Whispers</h3>
             </Card>
 
-            <CreatePostContainer type={WhisperTypes.POST} appendedPosts={appendedPosts} updateAppendedPosts={updateAppendedPosts}/>
+            <CreatePostContainer type={WhisperTypes.POST} updateAppendedPosts={updateAppendedPosts}/>
 
             {appendedPosts.map((post, i) => {
                 return <PostCard

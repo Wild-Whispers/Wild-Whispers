@@ -1,10 +1,8 @@
 "use client";
 
-import { useUser } from "@/_Contexts/User.context";
-import { User } from "@/_Interfaces/User";
 import TiledMediaContainerLightbox from "@/components/Lightboxes/TiledMediaContainerLightbox";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export enum MediaTypes {
     IMAGE = "IMAGE",
@@ -18,8 +16,6 @@ export interface TiledMedia {
 }
 
 export default function TiledMediaContainer({ media }: { media: Array<TiledMedia> }) {
-    const { currentUser, user, currentUserOwnsProfile, setCurrentUser, setUser, uidFromURL } = useUser();
-
     const [showLightbox, setShowLightbox] = useState(false);
     const [clickedMediaIndex, setClickedMediaIndex] = useState<number>(0);
     

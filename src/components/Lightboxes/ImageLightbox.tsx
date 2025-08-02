@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Buttons } from "../Buttons";
-import { User } from "@/_Interfaces/User";
 
 interface ImageLightboxProps {
     closeLightbox: () => void,
@@ -12,13 +11,10 @@ interface ImageLightboxProps {
     alt: string,
     width: number,
     height: number,
-    imageID: string,
-    currentUserOwnsProfile: boolean,
-    currentUser: User | undefined,
-    user: User
+    currentUserOwnsProfile: boolean
 }
 
-export default function ImageLightbox({ closeLightbox, src, alt, width, height, imageID, currentUserOwnsProfile, currentUser, user }: ImageLightboxProps) {
+export default function ImageLightbox({ closeLightbox, src, alt, width, height, currentUserOwnsProfile }: ImageLightboxProps) {
     useEffect(() => {
         document.body.classList.add("lightbox-open");
 

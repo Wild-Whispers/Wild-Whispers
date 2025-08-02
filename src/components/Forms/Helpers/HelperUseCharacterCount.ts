@@ -23,7 +23,7 @@ export function HelperUseCharacterCount(id: string, maxLength: number) {
                 InputCharacterCountFormatter(input, maxLength);
             }
         }
-    }, []);
+    }, [id, maxLength]);
 
     return { count, handleChange };
 }

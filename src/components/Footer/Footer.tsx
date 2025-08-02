@@ -23,6 +23,7 @@ export default function Footer() {
 
                 <FooterSection>
                     <Image className="w-40 h-40" width={2560} height={2560} src="/assets/icon_v1.png" alt="Wild Whisper Network's Mascot"/>
+                    {/* eslint-disable-next-line react/no-unescaped-entities */}
                     <p className="text-xs">The Wild Whispers Network's official mascot</p>
                 </FooterSection>
 

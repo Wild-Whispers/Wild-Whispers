@@ -16,6 +16,7 @@ export interface UserMedia {
     whisperID: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function isUserMedia(value: any): value is UserMedia {
     return (
         value &&

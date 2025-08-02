@@ -43,7 +43,7 @@ export default function Profile() {
                         <h3 className="text-lg font-bold">{currentUserOwnsProfile ? "Your" : `${user.userName}'s Public`} Whispers</h3>
                     </Card>
 
-                    <CreatePostContainer type={WhisperTypes.POST} appendedPosts={appendedPosts} updateAppendedPosts={updateAppendedPosts}/>
+                    <CreatePostContainer type={WhisperTypes.POST} updateAppendedPosts={updateAppendedPosts}/>
 
                     {appendedPosts.map((post, i) => {
                         return <PostCard

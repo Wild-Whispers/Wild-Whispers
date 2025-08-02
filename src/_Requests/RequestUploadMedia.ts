@@ -13,6 +13,7 @@ export interface UploadMediaReturn {
     returnedUser?: User
 }
 
+/* eslint-disable @next/next/no-async-client-component */
 export default async function RequestUploadMedia(
     user: User,
     imageType: UserImageTypes,
@@ -41,29 +42,29 @@ export default async function RequestUploadMedia(
         };
     }
 
-    let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
-    let response = await fetch(API_BASE_URL + "/post/files/media/upload/", {
+    const response = await fetch(API_BASE_URL + "/post/files/media/upload/", {
         method: "POST",
         headers: {
-            "Authorization": `Bearer ${newUser.tokens.accessToken}`,
+            "Authorization": `Bearer ${newUser.tokens!.accessToken}`,
         },
         body: formData,
     });
 
-    let result = await response.json();
+    const result = await response.json();
 
     newUser = {
         ...newUser,
         tokens: {
             accessToken: "",
-            refreshToken: newUser.tokens.refreshToken
+            refreshToken: newUser.tokens!.refreshToken
         }
     };
 
     if (response.ok) {
-        let insertedMediaID = result.payload.insertedMediaID;
-        let insertedMedia = result.payload.insertedOMedia;
+        const insertedMediaID = result.payload.insertedMediaID;
+        const insertedMedia = result.payload.insertedOMedia;
 
         return {
             success: true,

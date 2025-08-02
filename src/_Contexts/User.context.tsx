@@ -40,7 +40,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
                 try {
                     parsedCurrentUser = JSON.parse(cookie);
                 } catch (error) {
-                    console.warn("The user cookie was set, but the JSON was malformed.");
+                    console.warn("The user cookie was set, but the JSON was malformed.", error);
                 }
 
                 if (isUser(parsedCurrentUser)) setCurrentUser(parsedCurrentUser);

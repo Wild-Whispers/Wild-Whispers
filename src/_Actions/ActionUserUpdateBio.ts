@@ -6,7 +6,7 @@ export async function ActionUserUpdateBio(uid: string, bio: string) {
     console.info("[ActionUserUpdateBio] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
     await mongo.findOneAndUpdate(
         "user-info",

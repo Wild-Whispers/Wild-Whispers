@@ -7,7 +7,7 @@ export async function ActionUserUpdateInfoQuestions(uid: string, questionType: I
     console.info("[ActionUserUpdateInfoQuestions] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
     await mongo.database.collection("user-info").updateOne(
         { uid },

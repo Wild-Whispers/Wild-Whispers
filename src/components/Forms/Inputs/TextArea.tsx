@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, TextareaHTMLAttributes, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, TextareaHTMLAttributes, useEffect, useImperativeHandle, useRef } from "react";
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     value: string,

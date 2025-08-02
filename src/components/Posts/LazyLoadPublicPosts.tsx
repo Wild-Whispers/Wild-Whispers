@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import PostCard from "../PostCard/PostCard";
-import { User } from "@/_Interfaces/User";
 import Card from "../Card";
-import { useUser } from "@/_Contexts/User.context";
 import ActionLazyLoadWhispers, { ActionLazyLoadPostsReturn } from "@/_Actions/ActionLazyLoadWhispers";
 import { WhisperTypes } from "@/_Enums/WhisperTypes";
 import SkeletonLineMultiple from "../SkeletonLoader/SkeletonLineMultiple";
 
 export default function LazyLoadPublicPosts({ appendedPostsCount }: { appendedPostsCount: number }) {
-    const { currentUserOwnsProfile } = useUser();
     const [ready, setReady] = useState(false);
     const [posts, setPosts] = useState<Array<ActionLazyLoadPostsReturn>>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [postsSkip, setPostsSkip] = useState(0);
     const postsLimit = 20;
 
@@ -25,7 +23,7 @@ export default function LazyLoadPublicPosts({ appendedPostsCount }: { appendedPo
         };
 
         if (!ready) fetchPosts();
-    }, []);
+    }, [postsSkip, ready]);
 
     if (!ready) return <SkeletonLineMultiple styling="" lineCount={5}/>
 

@@ -16,7 +16,7 @@ export default function UserLargeImage({ user, onClick }: { user: User, onClick?
         const fetchImages = async () => {
             // Try to fetch from cache first
             if (process.env.NODE_ENV === "production") {
-                let cacheImages = await ActionImageCacheGet(user.uid, UserImageTypes.PROFILE_IMAGE);
+                const cacheImages = await ActionImageCacheGet(user.uid, UserImageTypes.PROFILE_IMAGE);
 
                 if (cacheImages.length > 0) {
                     updateImage(process.env.NEXT_PUBLIC_API_BASE_URL! + cacheImages[0].path);

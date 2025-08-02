@@ -20,9 +20,9 @@ export async function ActionUserFetchImages(uid: string): Promise<Array<UserMedi
     console.info("[ActionUserFetchImages] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
-    let imagesResult = await mongo.find("media",
+    const imagesResult = await mongo.find("media",
         {
             uid,
             mimeType: {
@@ -36,7 +36,7 @@ export async function ActionUserFetchImages(uid: string): Promise<Array<UserMedi
 
     await mongo.ClosePoolConnection();
 
-    let images: Array<UserMedia> = [];
+    const images: Array<UserMedia> = [];
 
     for (const record of imagesResult) {
         images.push({

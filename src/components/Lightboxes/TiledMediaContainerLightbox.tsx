@@ -1,7 +1,6 @@
 "use client";
 
 import { useUser } from "@/_Contexts/User.context";
-import { User } from "@/_Interfaces/User";
 import { Buttons } from "@/components/Buttons";
 import { TiledMedia } from "@/components/Media/TiledMediaContainer";
 import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
@@ -15,7 +14,7 @@ interface TiledMediaImageLightboxProps {
 }
 
 export default function TiledMediaContainerLightbox({ closeLightbox, media, indexToDisplay }: TiledMediaImageLightboxProps) {
-    const { currentUser, user, currentUserOwnsProfile, setCurrentUser, setUser, uidFromURL } = useUser();
+    const { currentUserOwnsProfile } = useUser();
     
     const [currentMedia, setCurrentMedia] = useState<TiledMedia>(media[indexToDisplay]);
     const [currentIndex, setCurrentIndex] = useState<number>(indexToDisplay);
@@ -44,7 +43,7 @@ export default function TiledMediaContainerLightbox({ closeLightbox, media, inde
     };
 
     const prevImage = () => {
-        let newIndex = currentIndex - 1;
+        const newIndex = currentIndex - 1;
 
         const isNonExistent = newIndex < 0;
         const isFirstPage = newIndex === 0;
@@ -62,7 +61,7 @@ export default function TiledMediaContainerLightbox({ closeLightbox, media, inde
     };
 
     const nextImage = () => {
-        let newIndex = currentIndex + 1;
+        const newIndex = currentIndex + 1;
 
         const isNonExistent = newIndex >= media.length;
         const isLastPage = newIndex === media.length - 1;
@@ -90,7 +89,7 @@ export default function TiledMediaContainerLightbox({ closeLightbox, media, inde
         return () => {
             document.body.classList.remove("lightbox-open");
         }
-    }, []);
+    }, [currentIndex, media.length]);
 
     return (
         <div className="fixed flex flex-col justify-start items-center w-full h-full right-0 bottom-0 left-0 top-0 backdrop-blur-sm z-100 overflow-y-scroll">

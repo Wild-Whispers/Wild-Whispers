@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, KeyboardEvent, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, KeyboardEvent, SetStateAction, useRef, useState } from "react";
 import { useUser } from "@/_Contexts/User.context";
 import { WhisperTypes } from "@/_Enums/WhisperTypes";
 import ActionCreatePost from "@/_Actions/ActionCreatePost";
@@ -23,10 +23,8 @@ import ActionCreatePostSetMedia, { ActionCreatePostSetMediaResult } from "@/_Act
 import isUserMedia, { UserMedia } from "@/_Interfaces/UserMedia";
 import { Post } from "@/_Interfaces/Post";
 
-export default function CreatePostContainer({ type, forWhisperID = null, appendedPosts, updateAppendedPosts }: { type: WhisperTypes, forWhisperID?: string | null, appendedPosts: Array<{ post: Post, mediaRaw: Array<UserMedia>}>, updateAppendedPosts: Dispatch<SetStateAction<Array<{ post: Post, mediaRaw: Array<UserMedia> }>>> }) {
+export default function CreatePostContainer({ type, forWhisperID = null, updateAppendedPosts }: { type: WhisperTypes, forWhisperID?: string | null, updateAppendedPosts: Dispatch<SetStateAction<Array<{ post: Post, mediaRaw: Array<UserMedia> }>>> }) {
     const { currentUser, setCurrentUser } = useUser();
-
-    if (!isUser(currentUser)) return;
 
     const [textValue, updateValue] = useState("");
     const [dropdownActive, setDropdownActive] = useState(false);
@@ -40,9 +38,11 @@ export default function CreatePostContainer({ type, forWhisperID = null, appende
     const uploadedMediaIDs: Array<string> = [];
     const uploadedMedia: Array<UserMedia> = [];
 
+    if (!isUser(currentUser)) return;
+
     const toggleAttachmentsDropdown = () => {
         if (attachmentsDropdown.current) {
-            let dropdown = attachmentsDropdown.current;
+            const dropdown = attachmentsDropdown.current;
 
             dropdown.classList.toggle("show");
             
@@ -78,7 +78,7 @@ export default function CreatePostContainer({ type, forWhisperID = null, appende
             if (!isUser(currentUser)) return; // Just in case
 
             // Submit post
-            let whisperID: string | null = await ActionCreatePost(currentUser, textValue, [], type, forWhisperID);
+            const whisperID: string | null = await ActionCreatePost(currentUser, textValue, [], type, forWhisperID);
 
             if (!whisperID) {
                 updateResponse("Could not submit post. Please try again or contact an administrator.");
@@ -88,14 +88,14 @@ export default function CreatePostContainer({ type, forWhisperID = null, appende
 
             // Upload media
             let workingUser: User = currentUser;
-            for (let file of files) {
-                let media: PostMedia = {
+            for (const file of files) {
+                const media: PostMedia = {
                     type: file.type as MimeType,
                     file: file,
                     name: file.name
                 };
 
-                let { success, insertedMedia, returnedUser }: UploadMediaReturn = await RequestUploadMedia(
+                const { success, insertedMedia, returnedUser }: UploadMediaReturn = await RequestUploadMedia(
                     workingUser,
                     UserImageTypes.REGULAR, // Remains blank if not an image
                     whisperID,
@@ -105,7 +105,7 @@ export default function CreatePostContainer({ type, forWhisperID = null, appende
                 );
 
                 if (success && isUser(returnedUser) && isUserMedia(insertedMedia)) {
-                    let newUser = {
+                    const newUser = {
                         ...returnedUser,
                         image: insertedMedia
                     };
@@ -137,7 +137,7 @@ export default function CreatePostContainer({ type, forWhisperID = null, appende
             }
 
             // Finally, update the post with the media
-            let { success, post }: ActionCreatePostSetMediaResult = await ActionCreatePostSetMedia(whisperID, uploadedMediaIDs);
+            const { success, post }: ActionCreatePostSetMediaResult = await ActionCreatePostSetMedia(whisperID, uploadedMediaIDs);
 
             if (!success) {
                 updateResponse("The image may have been uploaded, but the media could not be set for the post. Please try again, or contact an administrator.");

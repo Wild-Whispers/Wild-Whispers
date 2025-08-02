@@ -2,16 +2,32 @@
 
 import { ActionUserUpdateBio } from "@/_Actions/ActionUserUpdateBio";
 import { useUser } from "@/_Contexts/User.context";
+import isUser from "@/_Interfaces/User";
 import Card from "@/components/Card";
 import { useEffect, useRef, useState } from "react";
 
 export default function CardProfileBio() {
-    const { currentUser, user, currentUserOwnsProfile, setCurrentUser, setUser, uidFromURL } = useUser();
-    if (!user) return;
+    const { currentUser, user, currentUserOwnsProfile } = useUser();
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const pRef = useRef<HTMLParagraphElement>(null);
     const [bioText, setBioText] = useState("");
+
+    useEffect(() => {
+        if (!isUser(user)) return;
+
+        if (currentUserOwnsProfile) {
+            setBioText(`You have not set your bio yet.`);
+        } else {
+            setBioText(`${user.userName} has not set their bio yet.`);
+        }
+
+        if (user.userData!.bio) {
+            setBioText(user.userData!.bio);
+        }
+    }, [currentUserOwnsProfile, user]);
+
+    if (!isUser(user)) return;
 
     const handleValueClick = () => {
         if (pRef.current && inputRef.current && currentUserOwnsProfile) {
@@ -56,18 +72,6 @@ export default function CardProfileBio() {
         }
     };
 
-    useEffect(() => {
-        if (currentUserOwnsProfile) {
-            setBioText(`You have not set your bio yet.`);
-        } else {
-            setBioText(`${user.userName} has not set their bio yet.`);
-        }
-
-        if (user.userData.bio) {
-            setBioText(user.userData.bio);
-        }
-    }, []);
-
     return (
         <Card additionalClasses={[
             "flex-col",
@@ -87,7 +91,7 @@ export default function CardProfileBio() {
                         }
                     }}
                 ></textarea>
-                <p className={`inline text-sm ${!user.userData.bio ? "font-semibold" : user.userData.bio}`} ref={pRef} onClick={handleValueClick}>{bioText}</p>
+                <p className={`inline text-sm ${!user.userData!.bio ? "font-semibold" : user.userData!.bio}`} ref={pRef} onClick={handleValueClick}>{bioText}</p>
             </div>
         </Card>
     );

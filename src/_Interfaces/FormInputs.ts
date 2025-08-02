@@ -1,4 +1,4 @@
 export interface FormInputs {
     id: string,
-    onChange: any
+    onChange: () => void
 }

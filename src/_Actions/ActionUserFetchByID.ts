@@ -12,14 +12,14 @@ export async function ActionUserFetchByID(uid: string): Promise<User | undefined
     console.info("[ActionUserFetchByID] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
     try {
 
-        let userRaw = await mongo.findByID("accounts", uid);
-        let mediaRaw = await mongo.find("media", { uid });
-        let socialsRaw = await mongo.find("user-socials", { uid });
-        let [infoRaw] = await mongo.find("user-info", { uid });
+        const userRaw = await mongo.findByID("accounts", uid);
+        const mediaRaw = await mongo.find("media", { uid });
+        const socialsRaw = await mongo.find("user-socials", { uid });
+        const [infoRaw] = await mongo.find("user-info", { uid });
 
         if (!userRaw) {
             console.warn(`No user could be found with the uid '${uid}'.`);
@@ -30,17 +30,17 @@ export async function ActionUserFetchByID(uid: string): Promise<User | undefined
         delete userRaw.password;
         delete userRaw._id;
 
-        let userImage = {
+        const userImage = {
             ...mediaRaw.find(img => img.imageType === UserImageTypes.PROFILE_IMAGE) ?? null,
             _id: null
         };
 
-        let userBanner = {
+        const userBanner = {
             ...mediaRaw.find(img => img.imageType === UserImageTypes.PROFILE_BANNER) ?? null,
             _id: null
         };
 
-        let finalizedUser = {
+        const finalizedUser = {
             ...userRaw,
             uid: uid,
             image: userImage,
@@ -62,32 +62,9 @@ export async function ActionUserFetchByID(uid: string): Promise<User | undefined
     }
 }
 
-function stripMongoIDs<T extends Record<string, any>>(array: T[]): Omit<T, "_id">[] {
-    return array.map(({ _id, ...rest }) => rest);
+function stripMongoIDs<T extends { _id?: unknown }>(array: T[]): Omit<T, "_id">[] {
+    return array.map((item) => {
+        const { _id: _, ...rest } = item;
+        return rest;
+    });
 }
-
-
-/*export async function FetchUserByID(uid: string): Promise<User | null> {
-    try {
-        let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-
-        let response = await fetch(API_BASE_URL + "/post/accounts/user/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ uid: uid }),
-        });
-
-        let result = await response.json();
-
-        if (response.ok) {
-            return result.payload as User;
-        } else {
-            return null;
-        }
-    } catch (error) {
-        console.error("Fetch user by ID error:", error);
-        return null;
-    }
-}*/

@@ -7,6 +7,7 @@ export interface PostMedia {
     name: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function isPostMedia(value: any): value is PostMedia {
     return (
         value &&

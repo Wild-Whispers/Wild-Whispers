@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import ActionLazyLoadWhispers, { ActionLazyLoadPostsReturn } from "@/_Actions/ActionLazyLoadWhispers";
 import { WhisperTypes } from "@/_Enums/WhisperTypes";
 import PostsComments from "../PostsComments/PostsComments";
@@ -9,6 +9,7 @@ import SkeletonLineMultiple from "../SkeletonLoader/SkeletonLineMultiple";
 export default function LazyLoadComments({ forWhisperID, appendedCommentsCount }: { forWhisperID: string, appendedCommentsCount: number }) {
     const [ready, setReady] = useState(false);
     const [posts, setPosts] = useState<Array<ActionLazyLoadPostsReturn>>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [postsSkip, setPostsSkip] = useState(0);
     const postsLimit = 20;
 
@@ -21,7 +22,7 @@ export default function LazyLoadComments({ forWhisperID, appendedCommentsCount }
         };
 
         if (!ready) fetchPosts();
-    }, [forWhisperID]);
+    }, [forWhisperID, postsSkip, ready]);
 
     if (!ready) return <SkeletonLineMultiple styling="" lineCount={3}/>
 

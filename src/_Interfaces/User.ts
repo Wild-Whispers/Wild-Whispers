@@ -3,6 +3,7 @@ import { UserData } from "./UserData";
 import isUserMedia, { UserMedia } from "./UserMedia";
 
 export interface User {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _id: any | null | undefined,
     uid: string,
     image?: UserMedia,
@@ -16,6 +17,7 @@ export interface User {
     tokens?: _0Auth2Tokens
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function isUser(value: any): value is User {
     return (
         value &&

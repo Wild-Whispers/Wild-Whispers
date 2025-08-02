@@ -13,7 +13,9 @@ export interface Post {
     userImage: UserMedia | null
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function isPost(value: any): value is Post {
+
     return (
         value &&
         typeof value === "object" &&

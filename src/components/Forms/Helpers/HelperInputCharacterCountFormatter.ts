@@ -1,9 +1,9 @@
 
 
 export default function HelperInputCharacterCountFormatter(input: HTMLInputElement, max: number) {
-    let length = input.value.length;
+    const length = input.value.length;
 
-    let percentage = Math.floor((length / max) * 100);
+    const percentage = Math.floor((length / max) * 100);
 
     if (percentage < 50) {
         input.classList.remove("char-limit-50");

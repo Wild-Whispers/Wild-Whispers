@@ -35,13 +35,13 @@ export default function Registration() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        let formData = new FormData(e.currentTarget);
-        let payload = Object.fromEntries(formData.entries());
+        const formData = new FormData(e.currentTarget);
+        const payload = Object.fromEntries(formData.entries());
 
         try {
-            let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+            const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-            let response = await fetch(API_BASE_URL + "/post/accounts/register/", {
+            const response = await fetch(API_BASE_URL + "/post/accounts/register/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -49,10 +49,10 @@ export default function Registration() {
                 body: JSON.stringify(payload),
             });
 
-            let result = await response.json();
+            const result = await response.json();
 
             if (response.ok) {
-                let user: User = {
+                const user: User = {
                     ...result.payload,
                     _id: null,
                     tokens: {
@@ -100,6 +100,7 @@ export default function Registration() {
 
             <FormSection optionalStyling={null}>
                 <h1 className="text-xl font-bold text-center">Register for an account</h1>
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 <p className="text-xs font-bold text-center">This will register you for a linked account across all of Wild Whispers' services, ran by QuietWind01 (AKA QuietWindUponTheMoor).</p>
                 <p className={`text-xs font-bold text-center ${serverResponseClass}`}>{serverResponse}</p>
             </FormSection>

@@ -13,9 +13,9 @@ export default async function ActionCreatePostSetMedia(whisperID: string, mediaI
     console.info("[ActionCreatePostSetMedia] Request Made");
 
     // Configure MongoDB
-    let mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
+    const mongo = new WildMongo("WildWhispers", process.env.NEXT_MONGO_URI!);
 
-    let result = await mongo.findOneAndUpdate(
+    const result = await mongo.findOneAndUpdate(
         "posts",
         { _id: new ObjectId(whisperID) },
         {
@@ -28,7 +28,7 @@ export default async function ActionCreatePostSetMedia(whisperID: string, mediaI
 
     await mongo.ClosePoolConnection();
 
-    let post = {
+    const post = {
         ...result,
         _id: null
     };

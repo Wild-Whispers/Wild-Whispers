@@ -8,8 +8,9 @@ import PostCommentParagraph from "./PostCommentParagraph";
 
 
 export default function PostsComments({ whisper, whisperCreator, mediaRaw }: {whisper: Post, whisperCreator: User, mediaRaw: Array<UserMedia> }) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const media: Array<TiledMedia> = mediaRaw.map(image => {
-        let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
         return {
             type: (image.mimeType === Mimes.PNG || image.mimeType === Mimes.JPG || image.mimeType === Mimes.WEBP) ? MediaTypes.IMAGE : MediaTypes.VIDEO,

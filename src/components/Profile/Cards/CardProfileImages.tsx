@@ -7,24 +7,29 @@ import { ActionUserFetchImages } from "@/_Actions/ActionUserFetchImages";
 import Card from "@/components/Card";
 import { UserMedia } from "@/_Interfaces/UserMedia";
 import { useUser } from "@/_Contexts/User.context";
+import isUser from "@/_Interfaces/User";
 
 export default function CardProfileImages() {
-    const { currentUser, user, currentUserOwnsProfile, setCurrentUser, setUser, uidFromURL } = useUser();
-    if (!user) return;
+    const { user, currentUserOwnsProfile } = useUser();
 
     const [images, updateImages] = useState<Array<UserMedia>>([]);
     const [showLightbox, setShowLightbox] = useState(false);
     const [activeLightboxSrc, setActiveLightboxSrc] = useState("");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [activeLightboxImageID, setActiveLightboxImageID] = useState("");
 
     useEffect(() => {
+        if (!isUser(user)) return;
+
         const fetchImages = async () => {
             const result = await ActionUserFetchImages(user.uid);
             updateImages(result);
         };
 
         if (user) fetchImages();
-    }, []);
+    }, [user]);
+
+    if (!isUser(user)) return;
 
     return (
         <Card additionalClasses={[
@@ -67,10 +72,8 @@ export default function CardProfileImages() {
                         alt={`An image posted by ${user.userName} as part of their gallery.`}
                         height={5000}
                         width={5000}
-                        imageID={activeLightboxImageID}
+                        //imageID={activeLightboxImageID}
                         currentUserOwnsProfile={currentUserOwnsProfile}
-                        currentUser={currentUser}
-                        user={user}
                     />
                 )
             }

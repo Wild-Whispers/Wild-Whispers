@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@/_Contexts/User.context";
 import isUser, { User } from "@/_Interfaces/User";
 import Cookies from "js-cookie";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -13,9 +12,9 @@ export interface SigninResult {
 export async function RequestSignin(router: AppRouterInstance, user: string, password: string, setUser: (value: User) => void, setCurrentUser: (user: User | undefined) => void, setUidFromURL: (value: string) => void): Promise<SigninResult> {
     return new Promise(async (resolve) => {
         try {
-            let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+            const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-            let response = await fetch(API_BASE_URL + "/post/accounts/signin/", {
+            const response = await fetch(API_BASE_URL + "/post/accounts/signin/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -23,10 +22,10 @@ export async function RequestSignin(router: AppRouterInstance, user: string, pas
                 body: JSON.stringify({ user, password }),
             });
 
-            let result = await response.json();
+            const result = await response.json();
 
             if (response.ok) {
-                let user: User = {
+                const user: User = {
                     ...result.payload,
                     _id: null,
                     tokens: {

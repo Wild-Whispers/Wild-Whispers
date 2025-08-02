@@ -20,7 +20,7 @@ export default function PostCard({ whisper, whisperCreator, mediaRaw }: {whisper
     const [appendedPosts, updateAppendedPosts] = useState<Array<{ post: Post, mediaRaw: Array<UserMedia>}>>([]);
 
     const media: Array<TiledMedia> = mediaRaw.map(image => {
-        let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
         return {
             type: (image.mimeType === Mimes.PNG || image.mimeType === Mimes.JPG || image.mimeType === Mimes.WEBP) ? MediaTypes.IMAGE : MediaTypes.VIDEO,
@@ -55,7 +55,7 @@ export default function PostCard({ whisper, whisperCreator, mediaRaw }: {whisper
                     <LazyLoadComments forWhisperID={whisper.whisperID!} appendedCommentsCount={appendedPosts.length}/>
                 </div>
             </div>
-            <CreatePostContainer type={WhisperTypes.COMMENT} forWhisperID={whisper.whisperID} appendedPosts={appendedPosts} updateAppendedPosts={updateAppendedPosts}/>
+            <CreatePostContainer type={WhisperTypes.COMMENT} forWhisperID={whisper.whisperID} updateAppendedPosts={updateAppendedPosts}/>
         </Card>
     );
 }

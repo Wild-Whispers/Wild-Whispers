@@ -1,11 +1,10 @@
 "use client";
 
-import Cookies from "js-cookie";
 import { UserImageTypes } from "@/_Enums/UserImageTypes";
 import { PostMedia } from "@/_Interfaces/PostMedia";
 import isUser, { User } from "@/_Interfaces/User";
 import { allowedMimeTypes, MimeType } from "@/_Types/MimeType";
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import UserLargeImage from "../UserProfileImages/UserLargeImage";
 import { useUser } from "@/_Contexts/User.context";
 import { Mimes } from "@/_Enums/Mimes";
@@ -23,7 +22,7 @@ export default function ProfileImageContainer({ pageMessageUpdater, pageMessageC
     
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!isUser(currentUser) || !currentUserOwnsProfile) return;
@@ -39,19 +38,19 @@ export default function ProfileImageContainer({ pageMessageUpdater, pageMessageC
                 pageMessageClassUpdater("error-text");
             }
 
-            let whisperID = null;
-            let whisperType = null;
-            let newImageAlt = `${currentUser.userName}'s new profile image`;
-            let media: PostMedia = {
+            const whisperID = null;
+            const whisperType = null;
+            const newImageAlt = `${currentUser.userName}'s new profile image`;
+            const media: PostMedia = {
                 type: file.type as MimeType,
                 file: file,
                 name: file.name
             };
             
-            let { success, insertedMedia, returnedUser }: UploadMediaReturn = await RequestUploadMedia(currentUser, UserImageTypes.PROFILE_IMAGE, whisperID, whisperType, media, newImageAlt);
+            const { success, insertedMedia, returnedUser }: UploadMediaReturn = await RequestUploadMedia(currentUser, UserImageTypes.PROFILE_IMAGE, whisperID, whisperType, media, newImageAlt);
 
             if (success && isUser(returnedUser) && isUserMedia(insertedMedia)) {
-                let newUser = {
+                const newUser = {
                     ...returnedUser,
                     image: insertedMedia
                 };

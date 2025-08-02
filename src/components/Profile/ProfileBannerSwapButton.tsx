@@ -18,11 +18,11 @@ export interface ProfilePageMessageProps {
 
 export default function ProfileBannerSwapButton({ pageMessageUpdater, pageMessageClassUpdater, updateBanner }: ProfilePageMessageProps) {
     const { currentUser, currentUserOwnsProfile, setCurrentUser } = useUser();
-    if (!currentUserOwnsProfile) return null;
-
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+    if (!currentUserOwnsProfile) return null;
+
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!isUser(currentUser) || !currentUserOwnsProfile) return;
@@ -40,19 +40,19 @@ export default function ProfileBannerSwapButton({ pageMessageUpdater, pageMessag
                 pageMessageClassUpdater("error-text");
             }
 
-            let whisperID = null;
-            let whisperType = null;
-            let newImageAlt = `${currentUser.userName}'s new banner image`;
-            let media: PostMedia = {
+            const whisperID = null;
+            const whisperType = null;
+            const newImageAlt = `${currentUser.userName}'s new banner image`;
+            const media: PostMedia = {
                 type: file.type as MimeType,
                 file: file,
                 name: file.name
             };
             
-            let { success, insertedMedia, returnedUser }: UploadMediaReturn = await RequestUploadMedia(currentUser, UserImageTypes.PROFILE_BANNER, whisperID, whisperType, media, newImageAlt);
+            const { success, insertedMedia, returnedUser }: UploadMediaReturn = await RequestUploadMedia(currentUser, UserImageTypes.PROFILE_BANNER, whisperID, whisperType, media, newImageAlt);
 
             if (success && isUser(returnedUser) && isUserMedia(insertedMedia)) {
-                let newUser = {
+                const newUser = {
                     ...returnedUser,
                     image: insertedMedia
                 };
