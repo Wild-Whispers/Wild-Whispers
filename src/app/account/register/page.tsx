@@ -13,8 +13,6 @@ import Cookies from "js-cookie";
 import { useUser } from "@/_Contexts/User.context";
 import { useRouter } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
 
 export default function Registration() {
     const [formKey, setFormKey] = useState(0);

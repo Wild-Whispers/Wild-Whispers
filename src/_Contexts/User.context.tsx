@@ -3,7 +3,6 @@
 import { ActionUserFetchByID } from "@/_Actions/ActionUserFetchByID";
 import isUser, { User } from "@/_Interfaces/User";
 import Cookies from "js-cookie";
-import { useSearchParams } from "next/navigation";
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 
 type UserContextType = {
@@ -24,12 +23,10 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | undefined>(undefined);
     const [uidFromURL, setUidFromURL] = useState<string | null>(null);
 
-    const searchParams = useSearchParams();
-
     useEffect(() => {
+        const uid = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("uid") : null;
+
         const init = async () => {
-            // Set uid from url params
-            const uid = searchParams.get("uid");
             setUidFromURL(uid);
 
             // Set currentUser from cookie
@@ -56,7 +53,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
         };
 
         init();
-    }, [searchParams]);
+    }, []);
 
     const currentUserOwnsProfile = useMemo(() => {
         return currentUser?.uid === user?.uid; // False if uids don't match OR if either user object isn't' set/is malformed

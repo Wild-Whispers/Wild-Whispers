@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useState } from "react";
 
-export const dynamic = "force-dynamic";
-
 export default function Signout() {
     const router = useRouter();
     const [status, setStatus] = useState("");

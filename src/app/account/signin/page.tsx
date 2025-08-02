@@ -12,8 +12,6 @@ import { RequestSignin } from "@/_Requests/RequestSignin";
 import { HTTPMethods } from "@/_Enums/HTTPMethods";
 import { useUser } from "@/_Contexts/User.context";
 
-export const dynamic = "force-dynamic";
-
 interface SigninResultPayload {
     user: string,
     password: string,

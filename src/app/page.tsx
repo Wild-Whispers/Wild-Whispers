@@ -12,8 +12,6 @@ import LazyLoadPublicPosts from "@/components/Posts/LazyLoadPublicPosts";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export const dynamic = "force-dynamic";
-
 export default function Home() {
     const { currentUser } = useUser();
     const [appendedPosts, updateAppendedPosts] = useState<Array<{ post: Post, mediaRaw: Array<UserMedia>}>>([]);
