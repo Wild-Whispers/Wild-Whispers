@@ -16,6 +16,8 @@ import { Post } from "@/_Interfaces/Post";
 import { UserMedia } from "@/_Interfaces/UserMedia";
 import PostCard from "@/components/PostCard/PostCard";
 
+export const dynamic = "force-dynamic";
+
 export default function Profile() {
     const { currentUser, user, currentUserOwnsProfile } = useUser();
     const [appendedPosts, updateAppendedPosts] = useState<Array<{ post: Post, mediaRaw: Array<UserMedia>}>>([]);
